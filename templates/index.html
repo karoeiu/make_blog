@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Button Example</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <br>
+    <h2>キーワード選定</h2>
+    <form id="form1">
+        <input type="text" name="input1" id="text_input1" placeholder="Enter text here">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result1"></div>
+    
+    <h2>ブログ作成</h2>
+    <form id="form2">
+        <input type="text" name="input2" id="text_input2" placeholder="Enter text here">
+        <button type="submit">Submit</button>
+    </form>
+
+    <code>
+        <div id="result2"></div>
+    </code>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#form1').on('submit', function(e){
+                e.preventDefault();
+                var input1 = $('#text_input1').val().trim();
+                if (input1 === '') {
+                    alert('フォームにテキストを入力してください。');
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function',
+                    data: $(this).serialize(),
+                    success: function(response){
+                        $('#result1').html(response.result);
+                    }
+                });
+            });
+    
+            $('#form2').on('submit', function(e){
+                e.preventDefault();
+                var input2 = $('#text_input2').val().trim();
+                if (input2 === '') {
+                    alert('フォームにテキストを入力してください。');
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function',
+                    data: $(this).serialize(),
+                    success: function(response){
+                        $('#result2').html(response.result);
+                    }
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>
